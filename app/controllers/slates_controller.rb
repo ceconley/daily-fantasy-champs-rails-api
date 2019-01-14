@@ -46,6 +46,6 @@ class SlatesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def slate_params
-      params.fetch(:slate, {})
+      params.require(:slate).permit(:user_id, :lineup_id, :contest_id)
     end
 end
