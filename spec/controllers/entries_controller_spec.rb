@@ -23,10 +23,10 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe SlatesController, type: :controller do
+RSpec.describe EntriesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # Slate. As you add validations to Slate, be sure to
+  # Entry. As you add validations to Entry, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
@@ -38,12 +38,12 @@ RSpec.describe SlatesController, type: :controller do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # SlatesController. Be sure to keep this updated too.
+  # EntriesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
     it "returns a success response" do
-      slate = Slate.create! valid_attributes
+      entry = Entry.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_success
     end
@@ -51,33 +51,33 @@ RSpec.describe SlatesController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      slate = Slate.create! valid_attributes
-      get :show, params: {id: slate.to_param}, session: valid_session
+      entry = Entry.create! valid_attributes
+      get :show, params: {id: entry.to_param}, session: valid_session
       expect(response).to be_success
     end
   end
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new Slate" do
+      it "creates a new Entry" do
         expect {
-          post :create, params: {slate: valid_attributes}, session: valid_session
-        }.to change(Slate, :count).by(1)
+          post :create, params: {entry: valid_attributes}, session: valid_session
+        }.to change(Entry, :count).by(1)
       end
 
-      it "renders a JSON response with the new slate" do
+      it "renders a JSON response with the new entry" do
 
-        post :create, params: {slate: valid_attributes}, session: valid_session
+        post :create, params: {entry: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(slate_url(Slate.last))
+        expect(response.location).to eq(entry_url(Entry.last))
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the new slate" do
+      it "renders a JSON response with errors for the new entry" do
 
-        post :create, params: {slate: invalid_attributes}, session: valid_session
+        post :create, params: {entry: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -90,27 +90,27 @@ RSpec.describe SlatesController, type: :controller do
         skip("Add a hash of attributes valid for your model")
       }
 
-      it "updates the requested slate" do
-        slate = Slate.create! valid_attributes
-        put :update, params: {id: slate.to_param, slate: new_attributes}, session: valid_session
-        slate.reload
+      it "updates the requested entry" do
+        entry = Entry.create! valid_attributes
+        put :update, params: {id: entry.to_param, entry: new_attributes}, session: valid_session
+        entry.reload
         skip("Add assertions for updated state")
       end
 
-      it "renders a JSON response with the slate" do
-        slate = Slate.create! valid_attributes
+      it "renders a JSON response with the entry" do
+        entry = Entry.create! valid_attributes
 
-        put :update, params: {id: slate.to_param, slate: valid_attributes}, session: valid_session
+        put :update, params: {id: entry.to_param, entry: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the slate" do
-        slate = Slate.create! valid_attributes
+      it "renders a JSON response with errors for the entry" do
+        entry = Entry.create! valid_attributes
 
-        put :update, params: {id: slate.to_param, slate: invalid_attributes}, session: valid_session
+        put :update, params: {id: entry.to_param, entry: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -118,11 +118,11 @@ RSpec.describe SlatesController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested slate" do
-      slate = Slate.create! valid_attributes
+    it "destroys the requested entry" do
+      entry = Entry.create! valid_attributes
       expect {
-        delete :destroy, params: {id: slate.to_param}, session: valid_session
-      }.to change(Slate, :count).by(-1)
+        delete :destroy, params: {id: entry.to_param}, session: valid_session
+      }.to change(Entry, :count).by(-1)
     end
   end
 

@@ -1,8 +1,18 @@
-class ContestsController < ApplicationController
-  before_action :set_contest, only: [:show, :update, :destroy]
+# frozen_string_literal: true
 
-  # GET /contests
+class ContestsController < OpenReadController
+  before_action :set_contest, only: %i[show update]
+  before_action :set_contest_own, only: %i[index_own]
+
+  # GET /contests all
   def index
+    @contests = Contest.all
+
+    render json: @contests
+  end
+
+  # GET /contests own
+  def index_own
     @contests = Contest.all
 
     render json: @contests
@@ -14,15 +24,15 @@ class ContestsController < ApplicationController
   end
 
   # POST /contests
-  def create
-    @contest = Contest.new(contest_params)
+  # def create
+  #   @contest = Contest.new(contest_params)
 
-    if @contest.save
-      render json: @contest, status: :created, location: @contest
-    else
-      render json: @contest.errors, status: :unprocessable_entity
-    end
-  end
+  #   if @contest.save
+  #     render json: @contest, status: :created, location: @contest
+  #   else
+  #     render json: @contest.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # PATCH/PUT /contests/1
   def update
@@ -33,19 +43,24 @@ class ContestsController < ApplicationController
     end
   end
 
-  # DELETE /contests/1
-  def destroy
-    @contest.destroy
-  end
+  # # DELETE /contests/1
+  # def destroy
+  #   @contest.destroy
+  # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_contest
-      @contest = Contest.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def contest_params
-      params.require(:contest).permit(:name, :entrants_total, :entrants_current, :number, :winner)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_contest
+    @contest = Contest.find(params[:id])
+  end
+
+  def set_contest_own
+    @contest = current_user.constests.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def contest_params
+    params.require(:contest).permit(:name, :entrants_total, :entrants_current, :number, :winner)
+  end
 end

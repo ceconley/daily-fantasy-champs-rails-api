@@ -1,5 +1,7 @@
-class LineupsController < ApplicationController
-  before_action :set_lineup, only: [:show, :update, :destroy]
+# frozen_string_literal: true
+
+class LineupsController < ProtectedController
+  before_action :set_lineup, only: %i[create update destroy index show]
 
   # GET /lineups
   def index
@@ -39,13 +41,14 @@ class LineupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_lineup
-      @lineup = Lineup.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def lineup_params
-      params.require(:lineup).permit(:qb, :rb1, :rb2, :wr1, :wr2, :wr3, :te, :flex, :dst, :score)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_lineup
+    @lineup = current_user.lineups.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def lineup_params
+    params.require(:lineup).permit(:qb, :rb1, :rb2, :wr1, :wr2, :wr3, :te, :flex, :dst, :score)
+  end
 end

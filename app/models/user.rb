@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   include Authentication
   has_many :examples
-  has_many :slates
-  has_many :contests, through: :slates
-  has_many :lineups, through: :slates
+  has_many :entries
+  has_many :contests, through: :entries
+  has_many :lineups, through: :entries
 end
