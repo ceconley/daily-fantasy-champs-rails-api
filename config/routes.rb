@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :slates
+  resources :contests, except: %i[new edit]
+  resources :lineups, except: %i[new edit]
   # RESTful routes
   resources :examples, except: %i[new edit]
 
