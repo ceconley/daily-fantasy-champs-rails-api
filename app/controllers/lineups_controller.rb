@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class LineupsController < OpenReadController
-  before_action :set_lineup, only: %i[show]
-  before_action :set_lineup_own, only: %i[create update destroy index]
+  before_action :set_lineup, only: %i[update destroy]
 
   # GET /lineups
   def index
@@ -18,7 +17,7 @@ class LineupsController < OpenReadController
 
   # POST /lineups
   def create
-    @lineup = Lineup.new(lineup_params)
+    @lineup = current_user.lineups.build(lineup_params)
 
     if @lineup.save
       render json: @lineup, status: :created, location: @lineup
@@ -45,11 +44,7 @@ class LineupsController < OpenReadController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_contest
-    @lineup = Lineup.find(params[:id])
-  end
-
-  def set_lineup_own
-    @lineup = current_user.lineups.find(params[:id])
+    @lineup = current_user.lineups.find(params[:id])  
   end
 
   # Only allow a trusted parameter "white list" through.

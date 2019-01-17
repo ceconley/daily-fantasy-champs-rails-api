@@ -3,5 +3,5 @@
 class Lineup < ApplicationRecord
   has_many :entries
   has_many :contests, through: :entries
-  has_many :users, through: :entries
+  has_many :users, through: :entriest
 end
