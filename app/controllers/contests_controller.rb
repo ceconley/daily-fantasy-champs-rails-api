@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ContestsController < OpenReadController
-  before_action :set_contest, only: %i[show update]
+  before_action :set_contest, only: %i[show]
   before_action :set_contest_own, only: %i[index_own]
 
   # GET /contests all
@@ -35,13 +35,13 @@ class ContestsController < OpenReadController
   # end
 
   # PATCH/PUT /contests/1
-  def update
-    if @contest.update(contest_params)
-      render json: @contest
-    else
-      render json: @contest.errors, status: :unprocessable_entity
-    end
-  end
+  # def update
+  #   if @contest.update(contest_params)
+  #     render json: @contest
+  #   else
+  #     render json: @contest.errors, status: :unprocessable_entity
+  #   end
+  # end 
 
   # # DELETE /contests/1
   # def destroy
@@ -61,6 +61,6 @@ class ContestsController < OpenReadController
 
   # Only allow a trusted parameter "white list" through.
   def contest_params
-    params.require(:contest).permit(:name, :entrants_total, :entrants_current, :number, :winner)
+    params.require(:contest).permit(:name, :entrants_total, :entrants_current, :number, :winner,)
   end
 end

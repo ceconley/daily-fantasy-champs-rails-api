@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class LineupsController < ProtectedController
-  before_action :set_lineup, only: %i[create update destroy index show]
+class LineupsController < OpenReadController
+  before_action :set_lineup, only: %i[show]
+  before_action :set_lineup_own, only: %i[create update destroy index]
 
   # GET /lineups
   def index
@@ -43,7 +44,11 @@ class LineupsController < ProtectedController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_lineup
+  def set_contest
+    @lineup = Lineup.find(params[:id])
+  end
+
+  def set_lineup_own
     @lineup = current_user.lineups.find(params[:id])
   end
 
