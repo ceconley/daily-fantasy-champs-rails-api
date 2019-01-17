@@ -44,7 +44,7 @@ class LineupsController < OpenReadController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_contest
-    @lineup = current_user.lineups.find(params[:id])  
+    @lineup = current_user.lineups.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

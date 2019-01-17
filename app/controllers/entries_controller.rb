@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class EntriesController < ApplicationController
-  before_action :set_entry, only: %i[show update destroy]
+class EntriesController < OpenReadController
+  before_action :set_entry, only: %i[update destroy]
 
   # GET /entries
   def index
@@ -17,7 +17,7 @@ class EntriesController < ApplicationController
 
   # POST /entries
   def create
-    @entry = Entry.new(entry_params)
+    @entry = current_user.entries.build(entry_params)
 
     if @entry.save
       render json: @entry, status: :created, location: @entry
@@ -44,7 +44,7 @@ class EntriesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_entry
-    @entry = Entry.find(params[:id])
+    @entry = current_user.entries.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
