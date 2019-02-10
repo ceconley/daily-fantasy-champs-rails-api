@@ -2,7 +2,7 @@
 
 class ContestsController < OpenReadController
   before_action :set_contest, only: %i[show]
-  before_action :set_contest_own, only: %i[index_own]
+  before_action :set_contest_own, only: %i[index_own update]
 
   # GET /contests all
   def index
@@ -35,13 +35,13 @@ class ContestsController < OpenReadController
   # end
 
   # PATCH/PUT /contests/1
-  # def update
-  #   if @contest.update(contest_params)
-  #     render json: @contest
-  #   else
-  #     render json: @contest.errors, status: :unprocessable_entity
-  #   end
-  # end 
+  def update
+    if @contest.update(contest_params)
+      render json: @contest
+    else
+      render json: @contest.errors, status: :unprocessable_entity
+    end
+  end 
 
   # # DELETE /contests/1
   # def destroy
@@ -56,7 +56,7 @@ class ContestsController < OpenReadController
   end
 
   def set_contest_own
-    @contest = current_user.constests.find(params[:id])
+    @contest = current_user.contests.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
